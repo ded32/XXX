@@ -1,28 +1,53 @@
 #include "TXLib.h"
 
+//-----------------------------------------------------------------------------
+
+const COLORREF WINDOW_COLOR  = RGB (255, 250, 153);
+const COLORREF BEAR_COLOR    = RGB (157, 79, 0);
+const COLORREF TREE_COLOR    = RGB (111, 69, 28);
+const COLORREF FOLIAGE_COLOR = RGB (43, 247, 88);
+const COLORREF APPLE_COLOR   = RGB (240, 49, 97);
+const COLORREF BIRD_COLOR    = RGB (102, 148, 162);
+
+//=============================================================================
+
+void DrawHouse();                                                      //  прототип функции DrawHouse
+void DrawBear();
+void DrawMan();
+void DrawTree();
+void DrawSun();
+void DrawBird();
+void DrawBackground();
+
+//-----------------------------------------------------------------------------
+
 int main ()
     {
-    const COLORREF WINDOW_COLOR  = RGB (255, 250, 153);
-    const COLORREF BEAR_COLOR    = RGB (157, 79, 0);
-    const COLORREF TREE_COLOR    = RGB (111, 69, 28);
-    const COLORREF FOLIAGE_COLOR = RGB (43, 247, 88);
-    const COLORREF APPLE_COLOR   = RGB (240, 49, 97);
-    const COLORREF BIRD_COLOR    = RGB (102, 148, 162);
 
     txCreateWindow (1000, 600);
 
-    txSetColor (TX_WHITE);
-    txSetFillColor (TX_WHITE);
-    txRectangle (0, 0, 1000, 600);
+    DrawBackground();
 
-    txSetColor (RGB (80, 186, 88));
-    txSetFillColor (RGB (80, 186, 88));
-    txRectangle (1, 492, 1000, 600);
+    DrawHouse();                                                         // вызов функции  DrawHouse
 
-    txSetColor (RGB (97, 221, 243));
-    txSetFillColor (RGB (97, 221, 243));
-    txRectangle (0, 0, 1000, 492);
+    DrawBear();
 
+    DrawMan();
+
+    DrawTree();
+
+    DrawSun();
+
+    DrawBird();
+
+    txTextCursor (false);
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+void DrawHouse()                                              // определение функции DrawHouse
+    {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (RGB (204, 129, 53));
     txRectangle (85, 335, 400, 575);
@@ -38,7 +63,10 @@ int main ()
     txLine (107, 387, 215, 387);
     txLine (267, 387, 375, 387);
     txLine (321, 352, 321, 421);
+    }
 
+void DrawBear()
+    {
     txSetColor (TX_BLACK, 3);
     txSetFillColor (BEAR_COLOR);
     txEllipse (458, 453, 608, 550);
@@ -55,7 +83,10 @@ int main ()
     txEllipse (600, 436, 613, 450);
     txEllipse (627, 436, 640, 450);
     txEllipse (615, 454, 623, 462);
+    }
 
+void DrawMan()
+    {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (RGB (121, 48, 194));
     txEllipse (737, 475, 770, 541);
@@ -71,7 +102,10 @@ int main ()
     txSetColor (APPLE_COLOR);
     txSetFillColor (APPLE_COLOR);
     txEllipse (690, 468, 706, 482);
+    }
 
+void DrawTree()
+    {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (TREE_COLOR);
     txRectangle (843, 308, 871, 574);
@@ -88,7 +122,10 @@ int main ()
     txEllipse (792, 153, 812, 174);
     txEllipse (876, 193, 898, 215);
     txEllipse (814, 236, 836, 259);
+    }
 
+void DrawSun()
+    {
     txSetColor (TX_BLACK);
     txSetFillColor (RGB (255, 255, 0));
     txEllipse (475, 56, 596, 177);
@@ -101,8 +138,11 @@ int main ()
     txLine (586, 167, 636, 214);
     txLine (484, 164, 435, 203);
     txLine (429, 17, 485, 65);
+    }
 
-    txSetColor (TX_BLACK);
+void DrawBird()
+    {
+       txSetColor (TX_BLACK);
     txSetFillColor (BIRD_COLOR);
     txEllipse (773, 361, 791, 371);
     txEllipse (766, 354, 777, 364);
@@ -119,7 +159,19 @@ int main ()
     txSetColor (RGB (255, 255, 0));
     txLine (765, 358, 764, 361);
     txLine (763, 361, 767, 361);
+    }
 
-    txTextCursor (false);
-    return 0;
+void DrawBackground()
+    {
+    txSetColor (TX_WHITE);
+    txSetFillColor (TX_WHITE);
+    txRectangle (0, 0, 1000, 600);
+
+    txSetColor (RGB (80, 186, 88));
+    txSetFillColor (RGB (80, 186, 88));
+    txRectangle (1, 492, 1000, 600);
+
+    txSetColor (RGB (97, 221, 243));
+    txSetFillColor (RGB (97, 221, 243));
+    txRectangle (0, 0, 1000, 492);
     }
