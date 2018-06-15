@@ -144,7 +144,7 @@ void DrawBird()
     {
        txSetColor (TX_BLACK);
     txSetFillColor (BIRD_COLOR);
-    txEllipse (782-9, 366-5, 782+9, 366+5);                                  // 782; 366
+    txEllipse (782-9, 361, 791, 371);                                  // 782; 366
     txEllipse (766, 354, 777, 364);
     txSetFillColor (RGB (255, 255, 255));
     txEllipse (768, 357, 771, 360);
