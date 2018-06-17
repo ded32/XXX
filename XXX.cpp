@@ -108,20 +108,20 @@ void DrawTree()
     {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (TREE_COLOR);
-    txRectangle (843, 308, 871, 574);
-    POINT brunch[8] = {{843, 395}, {815, 379}, {773, 379}, {771, 375}, {811, 375}, {800, 367}, {802, 364}, {843, 390}};
+    txRectangle (857-14, 441-133, 857+14, 441+133);                              // 857; 441
+    POINT brunch[8] = {{857-14, 441-46}, {857-42, 441-62}, {857-84, 441-62}, {857-86, 441-66}, {857-46, 441-66}, {857-57, 441-74}, {857-55, 441-77}, {857-14, 441-51}};
     txPolygon (brunch, 8);
     txSetColor (FOLIAGE_COLOR);
     txSetFillColor (FOLIAGE_COLOR);
-    txEllipse (766, 170, 916, 329);
-    txEllipse (850, 125, 983, 280);
-    txEllipse (740, 99, 880, 243);
-    txEllipse (822, 58, 933, 180);
+    txEllipse (857-91, 441-271, 857+59, 441-112);
+    txEllipse (857-7, 441-316, 857+126, 441-161);
+    txEllipse (857-117, 441-342, 857+23, 441-198);
+    txEllipse (857-35, 441-383, 857+76, 441-261);
     txSetColor (APPLE_COLOR);
     txSetFillColor (APPLE_COLOR);
-    txEllipse (792, 153, 812, 174);
-    txEllipse (876, 193, 898, 215);
-    txEllipse (814, 236, 836, 259);
+    txEllipse (857-65, 441-288, 857-45, 441-267);
+    txEllipse (857+19, 441-248, 857+41, 441-226);
+    txEllipse (857-43, 441-205, 857-21, 441-182);
     }
 
 void DrawSun()
@@ -145,20 +145,20 @@ void DrawBird()
        txSetColor (TX_BLACK);
     txSetFillColor (BIRD_COLOR);
     txEllipse (782-9, 366-5, 782+9, 366+5);                                  // 782; 366
-    txEllipse (766, 354, 777, 364);
+    txEllipse (782-16, 366-12, 782-5, 366-2);
     txSetFillColor (RGB (255, 255, 255));
-    txEllipse (768, 357, 771, 360);
-    txLine (781, 370, 781, 375);
-    txLine (784, 370, 784, 375);
-    txLine (782, 364, 782, 369);
-    txLine (776, 366, 782, 369);
-    txLine (791, 366, 798, 359);
-    txLine (791, 366, 798, 373);
-    txLine (791, 366, 801, 363);
-    txLine (791, 366, 801, 371);
+    txEllipse (782-14, 366-9, 782-11, 366-6);
+    txLine (782-1, 366+4, 782-1, 375);
+    txLine (784, 370, 784, 366+9);
+    txLine (782, 366-2, 782, 366+3);
+    txLine (782-6, 366, 782, 366+3);
+    txLine (782+9, 366, 782+16, 366-7);
+    txLine (782+9, 366, 782+16, 366+7);
+    txLine (782+9, 366, 782+19, 366-3);
+    txLine (782+9, 366, 782+19, 366+5);
     txSetColor (RGB (255, 255, 0));
-    txLine (765, 358, 764, 361);
-    txLine (763, 361, 767, 361);
+    txLine (782-17, 366-8, 782-18, 366-5);
+    txLine (782-19, 366-5, 782-15, 366-5);
     }
 
 void DrawBackground()
