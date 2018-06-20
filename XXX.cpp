@@ -15,8 +15,8 @@ void DrawHouse (int x, int y, double sizeX, double sizeY, double roof = 1, COLOR
 void DrawBear (int x, int y, double sizeX, double sizeY, double step, COLORREF bearColor = BEAR_COLOR);
 void DrawMan (int x, int y, double sizeX, double sizeY, double hand = 0, double leg = 0, double step = 0, COLORREF appleColor = APPLE_COLOR, COLORREF manColor = RGB (121, 48, 194));
 void DrawTree (int x, int y, double sizeX, double sizeY, COLORREF AppleColor = APPLE_COLOR, COLORREF FoliageColor = FOLIAGE_COLOR, COLORREF TreeColor = TREE_COLOR);
-void DrawSun (int x, int y, double sizeX, double sizeY, COLORREF sunColo = RGB (255, 255, 0));
-void DrawBird ();
+void DrawSun (int x, int y, double sizeX, double sizeY, COLORREF sunColor = RGB (255, 255, 0), COLORREF eyeColor = TX_BLACK, COLORREF mouthColor = RGB (237, 28, 36));
+void DrawBird (int x, int y, double sizeX, double sizeY, COLORREF birdColor = BIRD_COLOR);
 void DrawBackground ();
 
 //-----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ int main ()
 
     DrawSun(535, 115, 1, 1);
 
-    DrawBird();
+    DrawBird (800, 400, 1, 1);
 
     txTextCursor (false);
     return 0;
@@ -150,7 +150,7 @@ void DrawTree (int x, int y,
 
 void DrawSun (int x, int y,
               double sizeX, double sizeY,
-              COLORREF sunColor)
+              COLORREF sunColor, COLORREF eyeColor, COLORREF mouthColor)
     {
     txSetColor (TX_BLACK);
     txSetFillColor (RGB (255, 255, 0));
@@ -164,27 +164,36 @@ void DrawSun (int x, int y,
     txLine (x+ 51*sizeX, y+52*sizeY, x+101*sizeX, y+ 99*sizeY);
     txLine (x- 51*sizeX, y+49*sizeY, x-100*sizeX, y+ 88*sizeY);
     txLine (x-106*sizeX, y-98*sizeY, x- 50*sizeX, y- 50*sizeY);
+    txSetColor (eyeColor);
+    txSetFillColor (eyeColor);
+    txEllipse (x-35*sizeX, y-25*sizeY, x- 5*sizeX, y*sizeY);
+    txEllipse (x+ 5*sizeX, y-25*sizeY, x+35*sizeX, y*sizeY);
+    txSetColor (mouthColor, 3);
+    txLine (x-15*sizeX, y+25*sizeY, x*sizeX, y+30*sizeY);
+    txLine (x+15*sizeX, y+25*sizeY, x*sizeX, y+30*sizeY);
     }
 
-void DrawBird ()
+void DrawBird (int x, int y,
+               double sizeX, double sizeY,
+               COLORREF birdColor)
     {
        txSetColor (TX_BLACK);
-    txSetFillColor (BIRD_COLOR);
-    txEllipse (782-9, 366-5, 782+9, 366+5);                                  // 782; 366
-    txEllipse (782-16, 366-12, 782-5, 366-2);
+    txSetFillColor (birdColor);
+    txEllipse (x- 9, y- 5, x+9, y+5);                                  // 782; 366
+    txEllipse (x-16, y-12, x-5, y-2);
     txSetFillColor (RGB (255, 255, 255));
-    txEllipse (782-14, 366-9, 782-11, 366-6);
-    txLine (782-1, 366+4, 782-1, 375);
-    txLine (784, 370, 784, 366+9);
-    txLine (782, 366-2, 782, 366+3);
-    txLine (782-6, 366, 782, 366+3);
-    txLine (782+9, 366, 782+16, 366-7);
-    txLine (782+9, 366, 782+16, 366+7);
-    txLine (782+9, 366, 782+19, 366-3);
-    txLine (782+9, 366, 782+19, 366+5);
+    txEllipse (x-14, y-9, x-11, y-6);
+    txLine (x-1, y+4, x- 1, y+9);
+    txLine (x+2, y+4, x+ 2, y+9);
+    txLine (x  , y-2, x   , y+3);
+    txLine (x-6, y  , x   , y+3);
+    txLine (x+9, y  , x+16, y-7);
+    txLine (x+9, y  , x+16, y+7);
+    txLine (x+9, y  , x+19, y-3);
+    txLine (x+9, y  , x+19, y+5);
     txSetColor (RGB (255, 255, 0));
-    txLine (782-17, 366-8, 782-18, 366-5);
-    txLine (782-19, 366-5, 782-15, 366-5);
+    txLine (x-17, y-8, x-18, y-5);
+    txLine (x-19, y-5, x-15, y-5);
     }
 
 void DrawBackground ()
