@@ -11,13 +11,13 @@ const COLORREF BIRD_COLOR    = RGB (102, 148, 162);
 
 //=============================================================================
 
-void DrawHouse();                                                      //  прототип функции DrawHouse
-void DrawBear();
-void DrawMan();
-void DrawTree();
-void DrawSun();
-void DrawBird();
-void DrawBackground();
+void DrawHouse (int x, int y, double sizeX, double sizeY, double roof = 1, COLORREF windowColor = WINDOW_COLOR, COLORREF roofColor = RGB (243, 31, 73), COLORREF treeColor = TREE_COLOR);                                                      //  прототип функции DrawHouse
+void DrawBear (int x, int y, double sizeX, double sizeY, double step, COLORREF bearColor = BEAR_COLOR);
+void DrawMan (int x, int y, double sizeX, double sizeY, double hand = 0, double leg = 0, double step = 0, COLORREF appleColor = APPLE_COLOR, COLORREF manColor = RGB (121, 48, 194));
+void DrawTree (int x, int y, double sizeX, double sizeY, COLORREF AppleColor = APPLE_COLOR, COLORREF FoliageColor = FOLIAGE_COLOR, COLORREF TreeColor = TREE_COLOR);
+void DrawSun (int x, int y, double sizeX, double sizeY, COLORREF sunColo = RGB (255, 255, 0));
+void DrawBird ();
+void DrawBackground ();
 
 //-----------------------------------------------------------------------------
 
@@ -28,15 +28,27 @@ int main ()
 
     DrawBackground();
 
-    DrawHouse();                                                         // вызов функции  DrawHouse
+    DrawHouse (340, 470, 0.5, 0.2, 1, TX_LIGHTGRAY, TX_BLACK);
 
-    DrawBear();
+    DrawHouse (510, 470, 0.3, 0.3, 0.9, WINDOW_COLOR, RGB (189, 79, 221));
 
-    DrawMan();
+    DrawHouse (430, 470, 0.2, 0.3, 1.1, RGB (131, 224, 252), RGB (255, 128, 192));
+                                                                    // вызов функции  DrawHouse
+    DrawHouse (160, 490, 0.8, 0.8);
 
-    DrawTree();
+    DrawBear (533, 502, 0.8, 0.8, 5);
 
-    DrawSun();
+    DrawBear (450, 550, 0.5, 0.5, 1, RGB (208, 113, 55));
+
+    DrawMan (700, 508, 0.8, 0.8, 3, 2, 2.5, APPLE_COLOR);
+
+    DrawTree (857, 441, 0.7, 0.7);
+
+    DrawTree (920, 490, 0.4, 0.4, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+
+    DrawTree (885, 525, 0.2, 0.2, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
+
+    DrawSun(535, 115, 1, 1);
 
     DrawBird();
 
@@ -46,101 +58,115 @@ int main ()
 
 //-----------------------------------------------------------------------------
 
-void DrawHouse()                                              // определение функции DrawHouse
+void DrawHouse (int x, int y,
+                double sizeX, double sizeY, double roof,
+                COLORREF windowColor, COLORREF roofColor, COLORREF treeColor)                                              // определение функции DrawHouse
     {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (RGB (204, 129, 53));
-    txRectangle (242-157, 445-120, 242+158, 455+120);                               // 242; 455
-    txSetFillColor (RGB (243, 31, 73));
-    POINT triangle[3] = {{242+2, 455-324}, {242-221, 455-120}, {242+234, 455-120}};
+    txRectangle (x-157*sizeX, y-130*sizeY, x+158*sizeX, y+120*sizeY);                               // 242; 455
+    txSetFillColor (roofColor);
+    POINT triangle[3] = {{x+2*sizeX, y-324*roof*sizeY}, {x-221*sizeX, y-120*sizeY}, {x+234*sizeX, y-120*sizeY}};
     txPolygon (triangle, 3);
-    txSetFillColor (WINDOW_COLOR);
-    txRectangle (242-135, 455-103, 242-27, 455-33);
-    txRectangle (242+25, 455-103, 242+133, 455-33);
-    txSetFillColor (TREE_COLOR);
-    txRectangle (242-120, 455-1, 242-41, 455+120);
-    txLine (242-81, 455-103, 242-81, 455-34);
-    txLine (242-135, 455-68, 242-27, 455-68);
-    txLine (242+25, 455-68, 242+133, 455-68);
-    txLine (242+79, 455-103, 242+79, 455-34);
+    txSetFillColor (windowColor);
+    txRectangle (x-135*sizeX, y-103*sizeY, x- 27*sizeX, y-33*sizeY);
+    txRectangle (x+ 25*sizeX, y-103*sizeY, x+133*sizeX, y-33*sizeY);
+    txSetFillColor (treeColor);
+    txRectangle (x-120*sizeX, y-1*sizeY, x-41*sizeX, y+120*sizeY);
+    txLine (x- 81*sizeX, y-103*sizeY, x- 81*sizeX, y-34*sizeY);
+    txLine (x-135*sizeX, y- 68*sizeY, x- 27*sizeX, y-68*sizeY);
+    txLine (x+ 25*sizeX, y- 68*sizeY, x+133*sizeX, y-68*sizeY);
+    txLine (x+ 79*sizeX, y-103*sizeY, x+ 79*sizeX, y-34*sizeY);
     }
 
-void DrawBear()
+void DrawBear (int x, int y,
+              double sizeX, double sizeY,
+              double step,
+              COLORREF bearColor)
     {
     txSetColor (TX_BLACK, 3);
-    txSetFillColor (BEAR_COLOR);
-    txEllipse (533-75, 508-55, 533+75, 502+48);                                       // 533; 502
-    txEllipse (533+43, 502-81, 533+129, 502-20);
-    txEllipse (533+42, 502-90, 533+64, 502-72);
-    txEllipse (533+114, 502-93, 533+135, 502-68);
-    txEllipse (533-91, 502-29, 533-72, 502-11);
-    txEllipse (533+50, 502+30, 533+67, 502+64);
-    txEllipse (533+30, 502+38, 533+48, 502+72);
-    txEllipse (533-59, 502+36, 533-41, 502+73);
-    txEllipse (533-40, 502+43, 533-20, 502+78);
+    txSetFillColor (bearColor);
+    txEllipse (x- 75*sizeX, y-49*sizeY, x+ 75*sizeX, y+48*sizeY);                                       // 533; 502
+    txEllipse (x+ 43*sizeX, y-81*sizeY, x+129*sizeX, y-20*sizeY);
+    txEllipse (x+ 42*sizeX, y-90*sizeY, x+ 64*sizeX, y-72*sizeY);
+    txEllipse (x+114*sizeX, y-93*sizeY, x+135*sizeX, y-68*sizeY);
+    txEllipse (x- 91*sizeX, y-29*sizeY, x- 72*sizeX, y-(11-step)*sizeY);
+    txEllipse (x+ 50*sizeX, y+30*sizeY, x+ 67*sizeX, y+(64-step)*sizeY);
+    txEllipse (x+ 30*sizeX, y+38*sizeY, x+ 48*sizeX, y+(72+step)*sizeY);
+    txEllipse (x- 59*sizeX, y+36*sizeY, x- 41*sizeX, y+(73-step)*sizeY);
+    txEllipse (x- 40*sizeX, y+43*sizeY, x- 20*sizeX, y+78*sizeY);
     txSetColor (TX_BLACK, 2);
     txSetFillColor (TX_BLACK);
-    txEllipse (533+67, 502-66, 533+80, 502-52);
-    txEllipse (533+94, 502-66, 533+107, 502-52);
-    txEllipse (533+82, 502-48, 533+90, 502-40);
+    txEllipse (x+67*sizeX, y-66*sizeY, x+ 80*sizeX, y-52*sizeY);
+    txEllipse (x+94*sizeX, y-66*sizeY, x+107*sizeX, y-52*sizeY);
+    txEllipse (x+82*sizeX, y-48*sizeY, x+ 90*sizeX, y-40*sizeY);
+    txLine (x+86*sizeX, y-28*sizeY, x+78*sizeX, y-33*sizeY);
+    txLine (x+86*sizeX, y-28*sizeY, x+94*sizeX, y-33*sizeY);
     }
 
-void DrawMan()
+void DrawMan (int x, int y,
+              double sizeX, double sizeY,
+              double hand, double leg, double step,
+              COLORREF appleColor, COLORREF manColor)
     {
     txSetColor (TX_BLACK, 2);
-    txSetFillColor (RGB (121, 48, 194));
-    txEllipse (754-17, 508-33, 754+16, 508+33);                           // 754; 508
-    txLine (754-50, 508-28 ,754-16, 508-15);
-    txLine (754+15, 508-15, 754+36, 508+17);
-    txLine (754-7, 508+30, 754-10, 508+63);
-    txLine (754+8, 508+30, 754+14, 508+63);
+    txSetFillColor (manColor);
+    txEllipse (x-17*sizeX, y-33*sizeY, x+16*sizeX, y+33*sizeY);                           // 754; 508
+    txLine (x-50*sizeX, y-(28+hand)*sizeY ,x-16*sizeX, y-15*sizeY);
+    txLine (x+15*sizeX, y-15*sizeY, x+36*sizeX, y+17*sizeY);
+    txLine (x- 7*sizeX, y+30*sizeY, x-(10+leg)*sizeX, y+(63-step)*sizeY);
+    txLine (x+ 8*sizeX, y+30*sizeY, x+(14+leg)*sizeX, y+(63+step)*sizeY);
     txSetFillColor (RGB (236, 223, 179));
-    txEllipse (754-17, 508-63, 754+18, 508-33);
+    txEllipse (x-17*sizeX, y-63*sizeY, x+18*sizeX, y-33*sizeY);
     txSetFillColor (TX_BLACK);
-    txEllipse (754-10, 508-55, 754-1, 508-47);
-    txEllipse (754+1, 508-55, 754+10, 508-47);
-    txSetColor (APPLE_COLOR);
-    txSetFillColor (APPLE_COLOR);
-    txEllipse (754-64, 508-40, 754-48, 508-26);
+    txEllipse (x-10*sizeX, y-55*sizeY, x- 1*sizeX, y-47*sizeY);
+    txEllipse (x+ 1*sizeX, y-55*sizeY, x+10*sizeX, y-47*sizeY);
+    txSetColor (appleColor);
+    txSetFillColor (appleColor);
+    txCircle (x-53*sizeX, y-(33+hand)*sizeY, 10);
     }
 
-void DrawTree()
+void DrawTree (int x, int y,
+              double sizeX, double sizeY,
+              COLORREF AppleColor, COLORREF FoliageColor, COLORREF TreeColor)
     {
     txSetColor (TX_BLACK, 2);
-    txSetFillColor (TREE_COLOR);
-    txRectangle (857-14, 441-133, 857+14, 441+133);                              // 857; 441
-    POINT brunch[8] = {{857-14, 441-46}, {857-42, 441-62}, {857-84, 441-62}, {857-86, 441-66}, {857-46, 441-66}, {857-57, 441-74}, {857-55, 441-77}, {857-14, 441-51}};
+    txSetFillColor (TreeColor);
+    txRectangle (x-14*sizeX, y-133*sizeY, x+14*sizeX, y+133*sizeY);                              // 857; 441
+    POINT brunch[8] = {{x-14*sizeX, y-46*sizeY}, {x-42*sizeX, y-62*sizeY}, {x-84*sizeX, y-62*sizeY}, {x-86*sizeX, y-66*sizeY}, {x-46*sizeX, y-66*sizeY}, {x-57*sizeX, y-74*sizeY}, {x-55*sizeX, y-77*sizeY}, {x-14*sizeX, y-51*sizeY}};
     txPolygon (brunch, 8);
-    txSetColor (FOLIAGE_COLOR);
-    txSetFillColor (FOLIAGE_COLOR);
-    txEllipse (857-91, 441-271, 857+59, 441-112);
-    txEllipse (857-7, 441-316, 857+126, 441-161);
-    txEllipse (857-117, 441-342, 857+23, 441-198);
-    txEllipse (857-35, 441-383, 857+76, 441-261);
-    txSetColor (APPLE_COLOR);
-    txSetFillColor (APPLE_COLOR);
-    txEllipse (857-65, 441-288, 857-45, 441-267);
-    txEllipse (857+19, 441-248, 857+41, 441-226);
-    txEllipse (857-43, 441-205, 857-21, 441-182);
+    txSetColor (FoliageColor);
+    txSetFillColor (FoliageColor);
+    txEllipse (x- 91*sizeX, y-271*sizeY, x+ 59*sizeX, y-112*sizeY);
+    txEllipse (x-  7*sizeX, y-316*sizeY, x+126*sizeX, y-161*sizeY);
+    txEllipse (x-117*sizeX, y-342*sizeY, x+ 23*sizeX, y-198*sizeY);
+    txEllipse (x- 35*sizeX, y-383*sizeY, x+ 76*sizeX, y-261*sizeY);
+    txSetColor (AppleColor);
+    txSetFillColor (AppleColor);
+    txEllipse (x-65*sizeX, y-288*sizeY, x-45*sizeX, y-267*sizeY);
+    txEllipse (x+19*sizeX, y-248*sizeY, x+41*sizeX, y-226*sizeY);
+    txEllipse (x-43*sizeX, y-205*sizeY, x-21*sizeX, y-182*sizeY);
     }
 
-void DrawSun()
+void DrawSun (int x, int y,
+              double sizeX, double sizeY,
+              COLORREF sunColor)
     {
     txSetColor (TX_BLACK);
     txSetFillColor (RGB (255, 255, 0));
-    txEllipse (535-60, 115-60, 535+60, 115+60);                                           // 535 115
-    txSetColor (RGB (255, 255, 0), 5);
-    txLine (535+6, 115+74, 535+6, 115+130);
-    txLine (535+72, 115-1, 535+146, 115-1);
-    txLine (535-138, 115-3, 535-71, 115-3);
-    txLine (535-2, 115-65, 535+2, 115-115);
-    txLine (535+52, 115-48, 535+93, 115-98);
-    txLine (535+51, 115+52, 535+101, 115+99);
-    txLine (535-51, 115+49, 535-100, 115+88);
-    txLine (535-106, 115-98, 535-50, 115-50);
+    txEllipse (x-60*sizeX, y-60*sizeY, x+60*sizeX, y+60*sizeY);                                           // 535; 115
+    txSetColor (sunColor, 5);
+    txLine (x+  6*sizeX, y+74*sizeY, x+  6*sizeX, y+130*sizeY);
+    txLine (x+ 72*sizeX, y- 1*sizeY, x+146*sizeX, y-  1*sizeY);
+    txLine (x-138*sizeX, y- 3*sizeY, x- 71*sizeX, y-  3*sizeY);
+    txLine (x-  2*sizeX, y-65*sizeY, x+  2*sizeX, y-115*sizeY);
+    txLine (x+ 52*sizeX, y-48*sizeY, x+ 93*sizeX, y- 98*sizeY);
+    txLine (x+ 51*sizeX, y+52*sizeY, x+101*sizeX, y+ 99*sizeY);
+    txLine (x- 51*sizeX, y+49*sizeY, x-100*sizeX, y+ 88*sizeY);
+    txLine (x-106*sizeX, y-98*sizeY, x- 50*sizeX, y- 50*sizeY);
     }
 
-void DrawBird()
+void DrawBird ()
     {
        txSetColor (TX_BLACK);
     txSetFillColor (BIRD_COLOR);
@@ -161,7 +187,7 @@ void DrawBird()
     txLine (782-19, 366-5, 782-15, 366-5);
     }
 
-void DrawBackground()
+void DrawBackground ()
     {
     txSetColor (TX_WHITE);
     txSetFillColor (TX_WHITE);
