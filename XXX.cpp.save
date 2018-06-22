@@ -11,13 +11,32 @@ const COLORREF BIRD_COLOR    = RGB (102, 148, 162);
 
 //=============================================================================
 
-void DrawHouse (int x, int y, double sizeX, double sizeY, double roof = 1, COLORREF windowColor = WINDOW_COLOR, COLORREF roofColor = RGB (243, 31, 73), COLORREF treeColor = TREE_COLOR);                                                      //  прототип функции DrawHouse
-void DrawBear (int x, int y, double sizeX, double sizeY, double step, COLORREF bearColor = BEAR_COLOR);
-void DrawMan (int x, int y, double sizeX, double sizeY, double hand = 0, double leg = 0, double step = 0, COLORREF appleColor = APPLE_COLOR, COLORREF manColor = RGB (121, 48, 194));
-void DrawTree (int x, int y, double sizeX, double sizeY, COLORREF AppleColor = APPLE_COLOR, COLORREF FoliageColor = FOLIAGE_COLOR, COLORREF TreeColor = TREE_COLOR);
-void DrawSun (int x, int y, double sizeX, double sizeY, COLORREF sunColor = RGB (255, 255, 0), COLORREF eyeColor = TX_BLACK, COLORREF mouthColor = RGB ();
-void DrawBird (int x, int y, double sizeX, double sizeY, COLORREF birdColor = BIRD_COLOR);
+void DrawHouse (int x, int y,
+                double sizeX, double sizeY, double roof = 1,
+                COLORREF windowColor = WINDOW_COLOR, COLORREF roofColor = RGB (243, 31, 73), COLORREF treeColor = TREE_COLOR);                                                      //  прототип функции DrawHouse
+void DrawBear  (int x, int y,
+                double sizeX, double sizeY,
+                double step, double smile, double winkL, double winkR,
+                COLORREF bearColor = BEAR_COLOR);
+void DrawMan   (int x, int y,
+                double sizeX, double sizeY,
+                double handL, double handR, double leg, double step,
+                double wind, double hair, double winkL, double winkR,
+                COLORREF appleColor = APPLE_COLOR, COLORREF manColor = RGB (121, 48, 194));
+void DrawTree  (int x, int y,
+                double sizeX, double sizeY, double brunch,
+                COLORREF AppleColor = APPLE_COLOR, COLORREF FoliageColor = FOLIAGE_COLOR, COLORREF TreeColor = TREE_COLOR);
+void DrawSun   (int x, int y,
+                double sizeX, double sizeY,
+                double smile, double winkL, double winkR,
+                COLORREF sunColor = RGB (255, 255, 0), COLORREF eyeColor = TX_BLACK, COLORREF mouthColor = RGB (237, 28, 36));
+void DrawBird  (int x, int y,
+                double sizeX, double sizeY,
+                double tail, double wind,
+                COLORREF birdColor = BIRD_COLOR);
+
 void DrawBackground ();
+void MoveMen ();
 
 //-----------------------------------------------------------------------------
 
@@ -28,33 +47,31 @@ int main ()
 
     DrawBackground();
 
-    DrawHouse (340, 470, 0.5, 0.2, 1, TX_LIGHTGRAY, TX_BLACK);
-
-    DrawHouse (510, 470, 0.3, 0.3, 0.9, WINDOW_COLOR, RGB (189, 79, 221));
-
-    DrawHouse (430, 470, 0.2, 0.3, 1.1, RGB (131, 224, 252), RGB (255, 128, 192));
-                                                                    // вызов функции  DrawHouse
-    DrawHouse (160, 490, 0.8, 0.8);
-
-    DrawBear (533, 502, 0.8, 0.8, 5);
-
-    DrawBear (450, 550, 0.5, 0.5, 1, RGB (208, 113, 55));
-
-    DrawMan (700, 508, 0.8, 0.8, 3, 2, 2.5, APPLE_COLOR);
-
-    DrawTree (857, 441, 0.7, 0.7);
-
-    DrawTree (920, 490, 0.4, 0.4, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
-
-    DrawTree (885, 525, 0.2, 0.2, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
-
-    DrawSun(535, 115, 1, 1);
-
-    DrawBird (800, 400, 1, 1);
-
     txTextCursor (false);
     return 0;
     }
+
+//-----------------------------------------------------------------------------
+
+void MoveMen ()
+    {
+    int xSergey = 100;
+    int xVolodya = 900;
+    while (xSergey < 500)
+        {
+        DrawBackground ();
+
+        DrawMan (xSergey, 508, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        DrawMan (xVolodya, 508, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        xVolodya = xVolodya - 15;
+
+        xSergey = xSergey + 20;
+        txSleep (20);
+        }
+    }
+
 
 //-----------------------------------------------------------------------------
 
@@ -81,7 +98,7 @@ void DrawHouse (int x, int y,
 
 void DrawBear (int x, int y,
               double sizeX, double sizeY,
-              double step,
+              double step, double smile, double winkL, double winkR,
               COLORREF bearColor)
     {
     txSetColor (TX_BLACK, 3);
@@ -97,44 +114,48 @@ void DrawBear (int x, int y,
     txEllipse (x- 40*sizeX, y+43*sizeY, x- 20*sizeX, y+78*sizeY);
     txSetColor (TX_BLACK, 2);
     txSetFillColor (TX_BLACK);
-    txEllipse (x+67*sizeX, y-66*sizeY, x+ 80*sizeX, y-52*sizeY);
-    txEllipse (x+94*sizeX, y-66*sizeY, x+107*sizeX, y-52*sizeY);
+    txEllipse (x+67*sizeX, y-(66-winkL)*sizeY, x+ 80*sizeX, y-(52+winkL)*sizeY);
+    txEllipse (x+94*sizeX, y-(66-winkR)*sizeY, x+107*sizeX, y-(52+winkR)*sizeY);
     txEllipse (x+82*sizeX, y-48*sizeY, x+ 90*sizeX, y-40*sizeY);
-    txLine (x+86*sizeX, y-28*sizeY, x+78*sizeX, y-33*sizeY);
-    txLine (x+86*sizeX, y-28*sizeY, x+94*sizeX, y-33*sizeY);
+    txLine (x+86*sizeX, y-(28-smile)*sizeY, x+78*sizeX, y-(33+smile)*sizeY);
+    txLine (x+86*sizeX, y-(28-smile)*sizeY, x+94*sizeX, y-(33+smile)*sizeY);
     }
 
 void DrawMan (int x, int y,
               double sizeX, double sizeY,
-              double hand, double leg, double step,
+              double handL, double handR, double leg, double step,
+              double wind, double hair, double winkL, double winkR,
               COLORREF appleColor, COLORREF manColor)
     {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (manColor);
     txEllipse (x-17*sizeX, y-33*sizeY, x+16*sizeX, y+33*sizeY);                           // 754; 508
-    txLine (x-50*sizeX, y-(28+hand)*sizeY ,x-16*sizeX, y-15*sizeY);
-    txLine (x+15*sizeX, y-15*sizeY, x+36*sizeX, y+17*sizeY);
+    txLine (x-50*sizeX, y-(28+handL)*sizeY ,x-15*sizeX, y-15*sizeY);
+    txLine (x+15*sizeX, y-15*sizeY, x+36*sizeX, y+(17-handR)*sizeY);
     txLine (x- 7*sizeX, y+30*sizeY, x-(10+leg)*sizeX, y+(63-step)*sizeY);
     txLine (x+ 8*sizeX, y+30*sizeY, x+(14+leg)*sizeX, y+(63+step)*sizeY);
+    txLine (x, y-63*sizeY, x+   wind *sizeX, y-(74+hair)*sizeY);
+    txLine (x, y-63*sizeY, x-(8-wind)*sizeX, y-(74+hair)*sizeY);
+    txLine (x, y-63*sizeY, x+(8+wind)*sizeX, y-(74+hair)*sizeY);
     txSetFillColor (RGB (236, 223, 179));
     txEllipse (x-17*sizeX, y-63*sizeY, x+18*sizeX, y-33*sizeY);
     txSetFillColor (TX_BLACK);
-    txEllipse (x-10*sizeX, y-55*sizeY, x- 1*sizeX, y-47*sizeY);
-    txEllipse (x+ 1*sizeX, y-55*sizeY, x+10*sizeX, y-47*sizeY);
+    txEllipse (x-10*sizeX, y-(55-winkL)*sizeY, x- 1*sizeX, y-(47+winkL)*sizeY);
+    txEllipse (x+ 1*sizeX, y-(55-winkR)*sizeY, x+10*sizeX, y-(47+winkR)*sizeY);
     txSetColor (appleColor);
     txSetFillColor (appleColor);
-    txCircle (x-53*sizeX, y-(33+hand)*sizeY, 10);
+    txCircle (x-53*sizeX, y-(33+handL)*sizeY, 10);
     }
 
 void DrawTree (int x, int y,
-              double sizeX, double sizeY,
+              double sizeX, double sizeY, double brunch,
               COLORREF AppleColor, COLORREF FoliageColor, COLORREF TreeColor)
     {
     txSetColor (TX_BLACK, 2);
     txSetFillColor (TreeColor);
     txRectangle (x-14*sizeX, y-133*sizeY, x+14*sizeX, y+133*sizeY);                              // 857; 441
-    POINT brunch[8] = {{x-14*sizeX, y-46*sizeY}, {x-42*sizeX, y-62*sizeY}, {x-84*sizeX, y-62*sizeY}, {x-86*sizeX, y-66*sizeY}, {x-46*sizeX, y-66*sizeY}, {x-57*sizeX, y-74*sizeY}, {x-55*sizeX, y-77*sizeY}, {x-14*sizeX, y-51*sizeY}};
-    txPolygon (brunch, 8);
+    POINT Brunch[8] = {{x-14*sizeX, y-(46-brunch)*sizeY}, {x-42*sizeX, y-(62-brunch)*sizeY}, {x-84*sizeX, y-(62-brunch)*sizeY}, {x-86*sizeX, y-(66-brunch)*sizeY}, {x-46*sizeX, y-(66-brunch)*sizeY}, {x-57*sizeX, y-(74-brunch)*sizeY}, {x-55*sizeX, y-(77-brunch)*sizeY}, {x-14*sizeX, y-(51-brunch)*sizeY}};
+    txPolygon (Brunch, 8);
     txSetColor (FoliageColor);
     txSetFillColor (FoliageColor);
     txEllipse (x- 91*sizeX, y-271*sizeY, x+ 59*sizeX, y-112*sizeY);
@@ -150,6 +171,7 @@ void DrawTree (int x, int y,
 
 void DrawSun (int x, int y,
               double sizeX, double sizeY,
+              double smile, double winkL, double winkR,
               COLORREF sunColor, COLORREF eyeColor, COLORREF mouthColor)
     {
     txSetColor (TX_BLACK);
@@ -164,36 +186,36 @@ void DrawSun (int x, int y,
     txLine (x+ 51*sizeX, y+52*sizeY, x+101*sizeX, y+ 99*sizeY);
     txLine (x- 51*sizeX, y+49*sizeY, x-100*sizeX, y+ 88*sizeY);
     txLine (x-106*sizeX, y-98*sizeY, x- 50*sizeX, y- 50*sizeY);
-    txSetColor (TX_BLACK);
-    txSetFillColor (TX_BLACK);
-    txEllipse (x-35*sizeX, y-25*sizeY, x- 5*sizeX, y*sizeY);
-    txEllipse (x+ 5*sizeX, y-25*sizeY, x+35*sizeX, y*sizeY);
-    txSetColor (TX_RED, 3);
-    txLine (x-15*sizeX, y+25*sizeY, x*sizeX, y+30*sizeY);
-    txLine (x+15*sizeX, y+25*sizeY, x*sizeX, y+30*sizeY);
+    txSetColor (eyeColor);
+    txSetFillColor (eyeColor);
+    txEllipse (x-35*sizeX, y-(25-winkL)*sizeY, x- 5*sizeX, y-winkL*sizeY);
+    txEllipse (x+ 5*sizeX, y-(25-winkR)*sizeY, x+35*sizeX, y-winkR*sizeY);
+    txSetColor (mouthColor, 3);
+    txLine (x-15*sizeX, y+(25+smile)*sizeY, x*sizeX, y+(30-smile)*sizeY);
+    txLine (x+15*sizeX, y+(25+smile)*sizeY, x*sizeX, y+(30-smile)*sizeY);
     }
 
 void DrawBird (int x, int y,
-               double sizeX, double sizeY,
+               double sizeX, double sizeY, double tail, double wind,
                COLORREF birdColor)
     {
        txSetColor (TX_BLACK);
     txSetFillColor (birdColor);
-    txEllipse (x- 9, y- 5, x+9, y+5);                                  // 782; 366
-    txEllipse (x-16, y-12, x-5, y-2);
+    txEllipse (x- 9*sizeX, y- 5*sizeY, x+9*sizeX, y+5*sizeY);                                  // 782; 366
+    txEllipse (x-16*sizeX, y-12*sizeY, x-5*sizeX, y-2*sizeY);
     txSetFillColor (RGB (255, 255, 255));
-    txEllipse (x-14, y-9, x-11, y-6);
-    txLine (x-1, y+4, x- 1, y+9);
-    txLine (x+2, y+4, x+ 2, y+9);
-    txLine (x  , y-2, x   , y+3);
-    txLine (x-6, y  , x   , y+3);
-    txLine (x+9, y  , x+16, y-7);
-    txLine (x+9, y  , x+16, y+7);
-    txLine (x+9, y  , x+19, y-3);
-    txLine (x+9, y  , x+19, y+5);
+    txEllipse (x-14*sizeX, y-9*sizeY, x-11*sizeX, y-6*sizeY);
+    txLine (x-1*sizeX, y+4*sizeY, x- 1*sizeX, y+9*sizeY);
+    txLine (x+2*sizeX, y+4*sizeY, x+ 2*sizeX, y+9*sizeY);
+    txLine (x  *sizeX, y-2*sizeY, x   *sizeX, y+3*sizeY);
+    txLine (x-6*sizeX, y  *sizeY, x   *sizeX, y+3*sizeY);
+    txLine (x+9*sizeX, y  *sizeY, x+(16+tail)*sizeX, y-(7+wind)*sizeY);
+    txLine (x+9*sizeX, y  *sizeY, x+(16+tail)*sizeX, y+(7-wind)*sizeY);
+    txLine (x+9*sizeX, y  *sizeY, x+(19+tail)*sizeX, y-(3+wind)*sizeY);
+    txLine (x+9*sizeX, y  *sizeY, x+(19+tail)*sizeX, y+(5-wind)*sizeY);
     txSetColor (RGB (255, 255, 0));
-    txLine (x-17, y-8, x-18, y-5);
-    txLine (x-19, y-5, x-15, y-5);
+    txLine (x-17*sizeX, y-8*sizeY, x-18*sizeX, y-5*sizeY);
+    txLine (x-19*sizeX, y-5*sizeY, x-15*sizeX, y-5*sizeY);
     }
 
 void DrawBackground ()
@@ -209,4 +231,30 @@ void DrawBackground ()
     txSetColor (RGB (97, 221, 243));
     txSetFillColor (RGB (97, 221, 243));
     txRectangle (0, 0, 1000, 492);
+
+    DrawHouse (340, 470, 0.5, 0.2, 1, TX_LIGHTGRAY, TX_BLACK);
+
+    DrawHouse (510, 470, 0.3, 0.3, 0.9, WINDOW_COLOR, RGB (189, 79, 221));
+
+    DrawHouse (430, 470, 0.2, 0.3, 1.1, RGB (131, 224, 252), RGB (255, 128, 192));
+
+    DrawHouse (160, 490, 0.8, 0.8);
+
+    DrawBear (533, 502, 0.8, 0.8, 5, 3, 3, 0);
+
+    DrawBear (450, 550, 0.5, 0.5, 1, 0, 0, 0, RGB (208, 113, 55));
+
+    DrawMan (700, 508, 0.8, 0.8, 3, 50, 2, 2.5, 15, 10, 5, 0, APPLE_COLOR);
+    
+    DrawMan (760, 520, 1, 0.5, 15, 0, 15, 1.5, 5, 1, 4, 4, RGB (151, 17, 6
+
+    DrawTree (857, 441, 0.7, 0.7, 55);
+
+    DrawTree (920, 490, 0.4, 0.4, 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+
+    DrawTree (885, 525, 0.2, 0.2, -20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
+
+    DrawSun (535, 115, 1, 1, -2, 10, 0);
+
+    DrawBird (800, 425, 1, 1, 10, -15);
     }
