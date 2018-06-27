@@ -40,6 +40,7 @@ void DrawBackground ();
 void MoveMen ();
 void MoveBears ();
 void MoveSun ();
+void MoveBird ();
 
 //-----------------------------------------------------------------------------
 
@@ -55,6 +56,8 @@ int main ()
     MoveBears ();
 
     MoveMen ();
+
+    MoveBird ();
 
     txTextCursor (false);
     return 0;
@@ -93,7 +96,7 @@ void MoveSun ()
         DrawSun (535, y, 1, 1, -2, 10, 0);
 
         y = y + 10;
-        txSleep (15);
+        txSleep (23);
         }
     }
 
@@ -102,7 +105,7 @@ void MoveMen ()
     int xSergey = 1150;
     int xVolodya = 1110;
     int xIvan = 1000;
-    while (xSergey < 700)
+    while (xSergey > 700)
         {
         DrawBackground ();
         DrawSun (535, 115, 1, 1, -2, 10, 0);
@@ -120,10 +123,31 @@ void MoveMen ()
         xSergey = xSergey - 10;
 
         xIvan = xIvan - 10;
-        txSleep (10);
+        txSleep (8);
         }
     }
 
+void MoveBird ()
+    {
+    int x = 1000;
+    int y = 235;
+    while (x > 800)
+        {
+        DrawBackground ();
+        DrawSun (535, 115, 1, 1, -2, 10, 0);
+        DrawBear (530, 502, 0.8, 0.8, 5, -6, 0, 0);
+        DrawBear (450, 550, 0.5, 0.5, 1, 2, 0, 4, RGB (208, 113, 55));
+        DrawMan (700, 508, 0.6, 0.8, -10, 10, 2, 2.5, 15, 10, 0, 0, 4, APPLE_COLOR);
+        DrawMan (660, 540, 1, 0.5, 50, 0, 5, 1.5, 0, 5, 2, 2, -2, RGB (151, 17, 6), RGB (255, 128, 0));
+        DrawMan (550, 580, 0.5, 0.3, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (0, 255, 255));
+
+        DrawBird (x, y, 1, 1, 10, 2, 10, 15);
+
+        x = x - 10;
+        y = y + 10;
+        txSleep (20);
+        }
+    }
 
 //-----------------------------------------------------------------------------
 
@@ -294,15 +318,13 @@ void DrawBackground ()
 
     DrawHouse (430, 470, 0.2, 0.3, 1.1, RGB (131, 224, 252), RGB (255, 128, 192));
 
-    DrawHouse (160, 490, 0.8, 0.8);
+    DrawHouse (160, 450, 0.8, 0.8);
 
     DrawTree (857, 441, 0.7, 0.7, 55);
 
-    DrawTree (920, 490, 0.4, 0.4, 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+    DrawTree (920, 470, 0.4, 0.4, 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
 
     DrawTree (885, 525, 0.2, 0.2, -20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
 
-    DrawBird (810, 425, 1, 1, 10, 2, 10, 15);
-
-    DrawBird (160, 220, 1.2, 1.2, -2, 0, 5, -5, RGB (255, 128, 192));
+    DrawBird (160, 182, 1.2, 1.2, -2, 0, 5, -5, RGB (255, 128, 192));
     }
