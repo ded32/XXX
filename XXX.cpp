@@ -37,6 +37,7 @@ void DrawBird  (int x, int y,
                 COLORREF birdColor = BIRD_COLOR);
 
 void FinishTitles (int x, int y);
+void BeginTitles (int x, int y);
 
 void DrawBackground ();
 void MoveMen ();
@@ -44,6 +45,8 @@ void MoveBearsPhysics ();
 void MoveSun ();
 void MoveBird ();
 void MoveFtitles ();
+void MoveThreemen ();
+void MoveBtitles ();
 
 //-----------------------------------------------------------------------------
 
@@ -53,15 +56,19 @@ int main ()
 
     txBegin ();
 
-    DrawBackground();
+    DrawBackground ();
 
-    //MoveBird ();
+    MoveBtitles ();
+
+    MoveBird ();
+
+    MoveThreemen ();
 
     MoveMen ();
 
     MoveBearsPhysics ();
 
-    //MoveFtitles ();
+    MoveFtitles ();
 
     txEnd ();
 
@@ -71,6 +78,26 @@ int main ()
 
 //-----------------------------------------------------------------------------
 
+void MoveBtitles ()
+    {
+    int t = 0;
+    while (t < 100)
+        {
+        DrawBackground ();
+
+        txSetColor (TX_BLACK);
+        txSelectFont ("Impact", 60);
+        txTextOut (400, t*0.7, "The cartoon");
+        txSelectFont ("Comic Sans MS", 40);
+        txTextOut (t*4.9, t*-4.8 + 600, "made by");
+        txSelectFont ("Gabriola", 90);
+        txTextOut (t*-6.1 + 1000, t*-3.6 + 500, "Blinova Sofa");
+
+        t++;
+        txSleep (20);
+        }
+    }
+
 void MoveBearsPhysics ()
     {
     int t = 0;
@@ -78,7 +105,7 @@ void MoveBearsPhysics ()
         {
         DrawBackground ();
 
-        DrawSun (t*-1 + 850, t*0.33, 1, 1, -2, 10, 0);
+        //DrawSun (t*-1 + 850, t*0.33, 1, 1, -2, 10, 0);
 
         DrawMan (t*3.67 + 580,          490, 0.25,  0.3, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
         DrawMan (t*3.33 + 540,          490,  0.5,  0.2, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
@@ -107,7 +134,7 @@ void MoveMen ()                        //400, 500; 410, 505; 420, 505
         {
         DrawBackground ();
 
-        DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);
+        //DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);
 
         DrawMan (t*-2    + 400,           500,  0.5,  0.2, 50,  50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
         DrawMan (t*-2.33 + 410, t*0.07  + 505, 0.25,  0.3,  0, -10, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
@@ -126,45 +153,53 @@ void MoveMen ()                        //400, 500; 410, 505; 420, 505
 
 void MoveBird ()
     {
-    int x = 1000;
-    int y = 235;
-    while (x > 800)
+    int t = 0;
+    while (t < 50)
         {
         DrawBackground ();
-        DrawSun (535, 115, 1, 1, -2, 10, 0);
-        DrawBear (530, 502, 0.8, 0.8, 5, -6, 0, 0);
-        DrawBear (450, 550, 0.5, 0.5, 1, 2, 0, 4, RGB (208, 113, 55));
-        DrawMan (700, 508, 0.6, 0.8, -10, 10, 2, 2.5, 15, 10, 0, 0, 4, APPLE_COLOR);
-        DrawMan (660, 540, 1, 0.5, 50, 0, 5, 1.5, 0, 5, 2, 2, -2, RGB (151, 17, 6), RGB (255, 128, 0));
-        DrawMan (550, 580, 0.5, 0.3, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (0, 255, 255));
 
-        DrawBird (x, y, 1, 1, 10, 2, 0, 10, 15);
+        //DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);                //950, -33,5
 
+        DrawBird (t*-4 + 1005, t*7 + 80, 1, 1, 10, 2, 0, 10, 15);
 
-        //DrawMan (t*1    + 300, t*0.2  + 480,  0.5,  0.2, 50,  50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
-        //DrawMan (         410, t*0.2  + 485, 0.25,  0.3,  0, -10, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
-        //DrawMan (t*-0.8 + 500, t*0.15 + 490,  0.4, 0.25,  0,   0, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
+        DrawBird (t*4 - 33, t*-4 + 377, -1.2, 1.2, -2, 0, 10, 5, -5, RGB (255, 128, 192));
 
-
-
-
-        x = x - 10;
-        y = y + 10;
-        txSleep (20);
+        t++;
+        txSleep (10);
         }
     }
 
 void MoveFtitles ()
     {
-    int x = 1000;
-    while (x > 480)
+    int t = 0;
+    while (t < 110)
         {
         DrawBackground ();
 
-        FinishTitles (x, 150);
+        FinishTitles (t*-7 + 1200, 150);
 
-        x = x - 10;
-        txSleep (25);
+        t++;
+        txSleep (10);
+        }
+    }
+
+void MoveThreemen ()
+    {
+    int t = 0;
+    while (t < 50)
+        {
+        DrawBackground ();
+        DrawBird (810, 425, 1, 1, 10, 2, 0, 10, 15);
+        DrawBird (162, 179, -1.2, 1.2, -2, 0, 10, 5, -5, RGB (255, 128, 192));
+
+        //DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);
+
+        DrawMan (t*2    + 300, t*0.4  + 480,  0.5,  0.2, 50,  50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
+        DrawMan (         410, t*0.4  + 485, 0.25,  0.3,  0, -10, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
+        DrawMan (t*-1.6 + 500, t*0.3 + 490,  0.4, 0.25,  0,   0, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
+
+        t++;
+        txSleep (10);
         }
     }
 //-----------------------------------------------------------------------------
@@ -323,6 +358,17 @@ void FinishTitles (int x, int y)
     txTextOut (x-215, y-40, "COUNTRYLIFE...");           //235, 60
     }
 
+void BeginTitles (int x, int y)
+    {
+    txSetColor (TX_BLACK);
+    txSelectFont ("Impact", 60);
+    txTextOut (x-100, y-80, "The cartoon");
+    txSelectFont ("Comic Sans MS", 40);
+    txTextOut (x-10, y-30, "made by");
+    txSelectFont ("Gabriola", 90);
+    txTextOut (x-110, y-10, "Blinova Sofa");
+    }
+
 void DrawBackground ()
     {
 
@@ -348,6 +394,4 @@ void DrawBackground ()
     DrawTree (920, 470, 0.4, 0.4, 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
 
     DrawTree (885, 525, 0.2, 0.2, -20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
-
-    DrawBird (160, 182, 1.2, 1.2, -2, 0, 10, 5, -5, RGB (255, 128, 192));
     }
