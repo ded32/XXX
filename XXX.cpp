@@ -19,7 +19,7 @@ void DrawBear  (int x, int y,
                 double step, double smile, double winkL, double winkR,
                 COLORREF bearColor = BEAR_COLOR);
 void DrawMan   (int x, int y,
-                double sizeX, double sizeY,
+                double sizeX, double sizeY, double apple,
                 double handL, double handR, double leg, double step,
                 double wind, double hair, double winkL, double winkR, double smile,
                 COLORREF appleColor = APPLE_COLOR, COLORREF manColor = RGB (121, 48, 194));
@@ -105,20 +105,38 @@ void MoveBearsPhysics ()
         {
         DrawBackground ();
 
-        //DrawSun (t*-1 + 850, t*0.33, 1, 1, -2, 10, 0);
+        DrawSun (t*-1.5 + 575, t*0.49 + 89.5, 1, 1, -2, 10, 0);           //575; 89.5
 
-        DrawMan (t*3.67 + 580,          490, 0.25,  0.3, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
-        DrawMan (t*3.33 + 540,          490,  0.5,  0.2, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
-        DrawMan (t*4    + 560, t*0.13 + 490,  0.4, 0.25, 50, 50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
+        DrawMan (t*3.67 + 580,          490, 0.25,  0.3, -10, 0, 0, t/4%2*8 - 4, t/4%2*7, t%17 -  8, t%5 + 5, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
+        DrawMan (t*3.33 + 540,          490,  0.5,  0.2,  -5, 0, 0, t/3%2*8 - 3, t/3%2*5, t%15 -  7, t%8 + 7, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
+        DrawMan (t*4    + 560, t*0.13 + 490,  0.4, 0.25, -10, 0, 0, t/4%2*6 - 2, t/4%2*6, t%21 - 10, t%7    , 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
 
-        DrawTree (857, 441, 0.7, 0.7, 55);
-        DrawTree (920, 470, 0.4, 0.4, 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
-        DrawTree (885, 525, 0.2, 0.2, -20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
+        //HAND                                               FOOT                                     HAIR
+        // t =        1 2 3  4  5  6 7 8 9  10               t =       0 1 2 3 4 5 6 7 8 9 10         t =   0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+        // t/3 =      0 0 1  1  1  2 2 2 3  3                t/4 =     0 0 0 0 1 1 1 1 2 2 2          t%7 = 0 0 0 0 0 0 0 0 1 2 3  4  5  6  0
+        // t/3%2 =    0 0 1  1  1  0 0 0 1  1                t/4%2 =   0 0 0 0 1 1 1 1 0 0 0
+
+        DrawTree (t/10%2 + 857, 441, 0.7, 0.7, t/10%2*8 + 55);
+        DrawTree (t/5%2  + 920, 470, 0.4, 0.4,  t/5%2*8 + 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+        DrawTree (t/3%2  + 885, 525, 0.2, 0.2,  t/3%2*8 - 20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
+        DrawBird (810, t/10%2*8 + 425, 1, 1, 10, 2,  0, t/3%3 + 10, t/3%5 + 15);
+        DrawBird (162, 179, -1.2, 1.2, -2, 0, 10, t/3%5 +  5, t/3%8 -  5, RGB (255, 128, 192));
         DrawHouse (510, 470, 0.3, 0.3, 0.9, WINDOW_COLOR, RGB (189, 79, 221));
 
-        DrawBear (t*-3.33 + 1100, t*-0.67 + 572, -0.8, 0.8, 5, -6, 0, 0);
+        //TREE; HOUSE
+        // t =     0 1 2 3 4 5 6 7 8 9 10
+        // t/2 =   0 0 1 1 2 2 3 3 4 4 5
+        // t/2%2 = 0 0 1 1 0 0 1 1 0 0 1
 
-        DrawBear (t*3.13,      t*-0.67 + 620, 0.5, 0.5, 1,  2, 0, 4, RGB (208, 113, 55));
+        DrawBear (t*-3.33 + 1100, t*-0.67 + 572, -0.8, 0.8, t/5%2*6 - 4, -6, t/10%2*5, t/10%2*5);
+
+        DrawBear (t*3.13,         t*-0.67 + 620,  0.5, 0.5, t/4%2*5 - 2,  2,  t/7%2*5, t/7%2*5, RGB (208, 113, 55));
+
+        //BEAR
+        // t =       0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+        // t/4 =     0 0 0 0 1 1 1 1 2 2 2  2  3  3  3  3
+        // t/4%2 =   0 0 0 0 1 1 1 1 0 0 0  0  1  1  1  1
+        // t/4%2*6 = 0 0 0 0 6 6 6 6 0 0 0  0  6  6  6  6
 
         t++;
 
@@ -127,23 +145,35 @@ void MoveBearsPhysics ()
     }
 
 
-void MoveMen ()                        //400, 500; 410, 505; 420, 505
+void MoveMen ()
     {
     int t = 0;
     while (t < 150)
         {
         DrawBackground ();
 
-        //DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);
+        DrawSun (t*-1.5 + 800, t*0.49 + 16, 1, 1, -2, 10, 0);
 
-        DrawMan (t*-2    + 400,           500,  0.5,  0.2, 50,  50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
-        DrawMan (t*-2.33 + 410, t*0.07  + 505, 0.25,  0.3,  0, -10, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
-        DrawMan (t*-2.33 + 420, t*-0.13 + 505,  0.4, 0.25,  0,   0, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
+        DrawMan (t*-2    + 400,           500,  0.2,  0.2,  -5, 50,  50, -5, 4, t%17 -  8, t%5 + 5, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
+        DrawMan (t*-2.33 + 415, t*0.07  + 505, 0.25,  0.3, -10,  0, -10, -5, 4, t%15 -  7, t%8 + 7, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
+        DrawMan (t*-2.33 + 430, t*-0.13 + 505,  0.4, 0.25, -10,  0,   0, -5, 4, t%21 - 10, t%7    , 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
 
         DrawHouse (160, 450, 0.8, 0.8);
 
-        DrawMan (t*2.67 + 100, t*1.2 + 500, -0.9, 0.8, -50, -3, -5, 4, -10, 10, 0, 0, 3, APPLE_COLOR, RGB  (255, 43, 48));
-        DrawMan (t*2.67 +  50, t*1.2 + 500,  0.6, 0.8, -50, -3, -5, 4, -10, 10, 0, 0, 3, APPLE_COLOR, RGB (196, 86, 211));
+        DrawMan (t*2.67 + 100, t*2 + 500, t*-0.01 - 0.9, t*0.01 + 0.8,   0, 0, -3, -5, 4, t%7  - 10, t%8 + 7, t/10%2*5, t/10%2*5, 3, APPLE_COLOR, RGB  (255, 43, 48));
+        DrawMan (t*2.4  +  50, t*2 + 500, t*0.01  + 0.6, t*0.01 + 0.8, -10, 0, -3, -5, 4, t%10 - 10,      10,  t/7%2*5,  t/7%2*5, 3, APPLE_COLOR, RGB (196, 86, 211));
+
+        //WINK
+        //t =     0 1 2 3 4 5 6 7 8 9 10             t =       0 1 2 3 4 5 6 7 8 9 10           t =        0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20            t =       0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+        //t%2 =   0 1 0 1 0 1 0 1 0 1 0              t/2 =     0 0 1 1 2 2 3 3 4 4 5            t/10 =     0 0 0 0 0 0 0 0 0 0 1  1  1  1  1  1  1  1  1  1  2             t/7 =     0 0 0 0 0 0 0 1 1 1 1  1  1  1  2
+        //t%2*5 = 0 5 0 5 0 5 0 5 0 5 0              t/2%2 =   0 0 1 1 0 0 1 1 0 0 1            t/10%2 =   0 0 0 0 0 0 0 0 0 0 1  1  1  1  1  1  1  1  1  1  0             t/7%2 =   0 0 0 0 0 0 0 1 1 1 1  1  1  1  0
+        //                                           t/2%2*5 = 0 0 5 5 0 0 5 5 0 0 5            t/10%2*5 = 0 0 0 0 0 0 0 0 0 0 5  5  5  5  5  5  5  5  5  5  0             t/7%2*5 = 0 0 0 0 0 0 0 5 5 5 5  5  5  5  0
+
+        DrawTree (t/10%2 + 857, 441, 0.7, 0.7, t/10%2*8 + 55);
+        DrawTree (t/5%2  + 920, 470, 0.4, 0.4,  t/5%2*8 + 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+        DrawTree (t/3%2  + 885, 525, 0.2, 0.2,  t/3%2*8 - 20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
+        DrawBird (810, t/10%2*8 + 425,    1,   1, 10, 2,  0, t/3%3 + 10, t/3%5 + 15);
+        DrawBird (162, 179, -1.2, 1.2, -2, 0, 10, t/3%5 +  5, t/3%8 -  5, RGB (255, 128, 192));
 
         t++;
 
@@ -154,15 +184,24 @@ void MoveMen ()                        //400, 500; 410, 505; 420, 505
 void MoveBird ()
     {
     int t = 0;
-    while (t < 50)
+    while (t < 100)
         {
         DrawBackground ();
 
-        //DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);                //950, -33,5
+        DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);
 
-        DrawBird (t*-4 + 1005, t*7 + 80, 1, 1, 10, 2, 0, 10, 15);
+        DrawTree (t/10%2 + 857, 441, 0.7, 0.7, t/10%2*8 + 55);
+        DrawTree (t/5%2  + 920, 470, 0.4, 0.4,  t/5%2*8 + 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+        DrawTree (t/3%2  + 885, 525, 0.2, 0.2,  t/3%2*8 - 20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
 
-        DrawBird (t*4 - 33, t*-4 + 377, -1.2, 1.2, -2, 0, 10, 5, -5, RGB (255, 128, 192));
+        DrawBird (t*-2 + 1005, t*3.5 + 80,    1,   1, 10, 2,  t/6%2*8, t/3%3 + 10, t/3%5 + 15);
+
+        DrawBird (t*2  -   33, t*-2 + 377, -1.2, 1.2, -2, 0, t/4%2*10, t/3%5 +  5, t/3%8 -  5, RGB (255, 128, 192));
+
+        //BIRD
+        //t =        0 1 2  3  4 5 6  7  8 9 10
+        //t/2%2 =    0 0 1  1  0 0 1  1  0 0 1
+        //t/2%2*10 = 0 0 10 10 0 0 10 10 0 0 10
 
         t++;
         txSleep (10);
@@ -189,14 +228,18 @@ void MoveThreemen ()
     while (t < 50)
         {
         DrawBackground ();
-        DrawBird (810, 425, 1, 1, 10, 2, 0, 10, 15);
-        DrawBird (162, 179, -1.2, 1.2, -2, 0, 10, 5, -5, RGB (255, 128, 192));
+        DrawTree (t/10%2 + 857, 441, 0.7, 0.7, t/10%2*8 + 55);
+        DrawTree (t/5%2  + 920, 470, 0.4, 0.4,  t/5%2*8 + 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
+        DrawTree (t/3%2  + 885, 525, 0.2, 0.2,  t/3%2*8 - 20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
 
-        //DrawSun (t*-1 + 1000, t*0.33 - 50, 1, 1, -2, 10, 0);
+        DrawSun (t*-2 + 900, t*0.66 - 17, 1, 1, -2, 10, 0);
 
-        DrawMan (t*2    + 300, t*0.4  + 480,  0.5,  0.2, 50,  50, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
-        DrawMan (         410, t*0.4  + 485, 0.25,  0.3,  0, -10, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
-        DrawMan (t*-1.6 + 500, t*0.3 + 490,  0.4, 0.25,  0,   0, -5, 4, -10, 10, 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
+        DrawBird (810, t/10%2*8 + 425,    1,   1, 10, 2,  0, t/3%3 + 10, t/3%5 + 15);
+        DrawBird (162, 179, -1.2, 1.2, -2, 0, 10, t/3%5 +  5, t/3%8 -  5, RGB (255, 128, 192));
+
+        DrawMan (t*2    + 300, t*0.4  + 480,  0.2,  0.2,  -5, 50, 50, -5, 4, t%17 -  8, t%5 + 5, 0, 0, 0, RGB (254, 226, 95), RGB (101, 236, 55));
+        DrawMan (         410, t*0.4  + 485, 0.25,  0.3, -10, 0, -10, -5, 4, t%15 -  7, t%8 + 7, 0, 0, 0, RGB (254, 226, 95), RGB  (0, 255, 255));
+        DrawMan (t*-1.6 + 500, t*0.3  + 490,  0.4, 0.25, -10, 0,   0, -5, 4, t%21 - 10, t%7    , 0, 0, 0, RGB (254, 226, 95), RGB (255, 255, 87));
 
         t++;
         txSleep (10);
@@ -236,11 +279,11 @@ void DrawBear (int x, int y,
     txEllipse (x+ 43*sizeX, y-81*sizeY, x+129*sizeX, y-20*sizeY);
     txEllipse (x+ 42*sizeX, y-90*sizeY, x+ 64*sizeX, y-72*sizeY);
     txEllipse (x+114*sizeX, y-93*sizeY, x+135*sizeX, y-68*sizeY);
-    txEllipse (x- 91*sizeX, y-29*sizeY, x- 72*sizeX, y-(11-step)*sizeY);
+    txEllipse (x- 91*sizeX, y-29*sizeY, x- 72*sizeX, y-11*sizeY);
     txEllipse (x+ 50*sizeX, y+30*sizeY, x+ 67*sizeX, y+(64-step)*sizeY);
     txEllipse (x+ 30*sizeX, y+38*sizeY, x+ 48*sizeX, y+(72+step)*sizeY);
     txEllipse (x- 59*sizeX, y+36*sizeY, x- 41*sizeX, y+(73-step)*sizeY);
-    txEllipse (x- 40*sizeX, y+43*sizeY, x- 20*sizeX, y+78*sizeY);
+    txEllipse (x- 40*sizeX, y+43*sizeY, x- 20*sizeX, y+(78+step)*sizeY);
     txSetColor (TX_BLACK, 2);
     txSetFillColor (TX_BLACK);
     txEllipse (x+67*sizeX, y-(66-winkL)*sizeY, x+ 80*sizeX, y-(52+winkL)*sizeY);
@@ -251,7 +294,7 @@ void DrawBear (int x, int y,
     }
 
 void DrawMan (int x, int y,
-              double sizeX, double sizeY,
+              double sizeX, double sizeY, double apple,
               double handL, double handR, double leg, double step,
               double wind, double hair, double winkL, double winkR, double smile,
               COLORREF appleColor, COLORREF manColor)
@@ -259,7 +302,7 @@ void DrawMan (int x, int y,
     txSetColor (TX_BLACK, 2);
     txSetFillColor (manColor);
     txEllipse (x-17*sizeX, y-33*sizeY, x+16*sizeX, y+33*sizeY);                           // 754; 508
-    txLine (x-50*sizeX, y-(28+handL)*sizeY ,x-15*sizeX, y-15*sizeY);
+    txLine (x-36*sizeX, y+(17-handL)*sizeY ,x-15*sizeX, y-15*sizeY);
     txLine (x+15*sizeX, y-15*sizeY, x+36*sizeX, y+(17-handR)*sizeY);
     txLine (x- 7*sizeX, y+30*sizeY, x-(10+leg)*sizeX, y+(63-step)*sizeY);
     txLine (x+ 8*sizeX, y+30*sizeY, x+(14+leg)*sizeX, y+(63+step)*sizeY);
@@ -275,7 +318,7 @@ void DrawMan (int x, int y,
     txLine (x+5*sizeX, y-(42+smile)*sizeY, x, y-(42-smile)*sizeY);
     txSetColor (appleColor);
     txSetFillColor (appleColor);
-    txCircle (x-53*sizeX, y-(33+handL)*sizeY, 10);
+    txCircle (x-43*sizeX, y+(5-handL)*sizeY, 10+apple);
     }
 
 void DrawTree (int x, int y,
@@ -388,10 +431,4 @@ void DrawBackground ()
     DrawHouse (430, 470, 0.2, 0.3, 1.1, RGB (131, 224, 252), RGB (255, 128, 192));
 
     DrawHouse (160, 450, 0.8, 0.8);
-
-    DrawTree (857, 441, 0.7, 0.7, 55);
-
-    DrawTree (920, 470, 0.4, 0.4, 60, RGB (152, 1, 35), RGB (21, 193, 21), RGB (100, 54, 13));
-
-    DrawTree (885, 525, 0.2, 0.2, -20, RGB (254, 226, 95), RGB (0, 128, 64), RGB (126, 41, 1));
     }
